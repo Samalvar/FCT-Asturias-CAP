@@ -1,0 +1,111 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "iniciales": {
+            "value": "xxx" 
+        },
+        "location": {
+            "value": "westeurope"
+        },
+        "ipName_servernagios": {
+            "value": "ip-servernagios" 
+        },
+        "ipName_linux": {
+            "value": "ip-linux" 
+        },
+        "ipName_windows": {
+            "value": "ip-windows" 
+        },
+        "ipName_bbdd": {
+            "value": "ip-bbdd" 
+        },
+        "networkInterfaceName_servernagios": {
+            "value": "nic-servernagios" 
+        },
+        "networkInterfaceName_linux": {
+            "value": "nic-linux"        
+        },
+        "networkInterfaceName_windows": {
+            "value": "nic-windows"      
+        },
+        "networkInterfaceName_bbdd": {
+            "value": "nic-bbdd"         
+        },
+        "networkSecurityGroupId": {
+            "value": "/subscriptions/8df38d37-e466-425f-b08b-9b9970aea6c5/resourceGroups/MonitoringPOC/providers/Microsoft.Network/networkSecurityGroups/MaquinaSalto-nsg"
+        },
+        "subnetName": {
+            "value": "default"
+        },
+        "virtualNetworkId": {
+            "value": "/subscriptions/8df38d37-e466-425f-b08b-9b9970aea6c5/resourceGroups/MonitoringPOC/providers/Microsoft.Network/virtualNetworks/MonitoringPOC-vnet"
+        },
+        "virtualMachineName_servernagios": {
+            "value": "vm-servernagios"  
+        },
+        "virtualMachineName_linux": {
+            "value": "vm-linux"         
+        },
+        "virtualMachineName_windows": {
+            "value": "vm-windows"       
+        },
+        "virtualMachineName_bbdd": {
+            "value": "vm-bbdd"         
+        },
+        "virtualMachineComputerName_servernagios": {
+            "value": "vmc-servernagios"     
+        },
+        "virtualMachineComputerName_linux": {
+            "value": "vmc-linux"            
+        },
+        "virtualMachineComputerName_windows": {
+            "value": "vmc-windows"          
+        },
+        "virtualMachineComputerName_bbdd": {
+            "value": "vmc-bbdd"             
+        },
+        "virtualMachineRG": {
+            "value": "MonitoringPOC"
+        },
+        "osDiskType": {
+            "value": "Standard_LRS"
+        },
+        "virtualMachineSize_servernagios": {
+            "value": "Standard_B2s"
+        },
+        "virtualMachineSize_linux": {
+            "value": "Standard_B1s"
+        },
+        "virtualMachineSize_windows": {
+            "value": "Standard_B2s"
+        },
+        "virtualMachineSize_bbdd": {
+            "value": "Standard_B2s"
+        },
+        "patchMode": {
+            "value": "AutomaticByOS"
+        },
+        "enableHotpatching": {
+            "value": false
+        },
+        "autoShutdownStatus": {
+            "value": "Enabled"
+        },
+        "autoShutdownTime": {
+            "value": "15:00"
+        },
+        "autoShutdownTimeZone": {
+            "value": "Romance Standard Time"
+        },
+        "autoShutdownNotificationStatus": {
+            "value": "Disabled"
+        },
+        "autoShutdownNotificationLocale": {
+            "value": "en"
+        },
+        "autoshutdown":{
+            "value": "shutdown-computevm"
+        }
+    }
+}

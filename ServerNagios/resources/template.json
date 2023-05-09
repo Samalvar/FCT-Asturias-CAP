@@ -1,0 +1,610 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string"
+        },
+        "iniciales": {
+            "type": "string"
+        },
+        "ipName_servernagios": {
+            "type": "string"
+        },
+        "ipName_linux": {
+            "type": "string"
+        },
+        "ipName_windows": {
+            "type": "string"
+        },
+        "ipName_bbdd": {
+            "type": "string"
+        },
+        "networkInterfaceName_servernagios": {
+            "type": "string"
+        },
+        "networkInterfaceName_linux": {
+            "type": "string"
+        },
+        "networkInterfaceName_windows": {
+            "type": "string"
+        },
+        "networkInterfaceName_bbdd": {
+            "type": "string"
+        },
+        "networkSecurityGroupId": {
+            "type": "string"
+        },
+        "subnetName": {
+            "type": "string"
+        },
+        "virtualNetworkId": {
+            "type": "string"
+        },
+        "virtualMachineName_servernagios": {
+            "type": "string"
+        },
+        "virtualMachineName_linux": {
+            "type": "string"
+        },
+        "virtualMachineName_windows": {
+            "type": "string"
+        },
+        "virtualMachineName_bbdd": {
+            "type": "string"
+        },
+        "virtualMachineComputerName_servernagios": {
+            "type": "string"
+        },
+        "virtualMachineComputerName_linux": {
+            "type": "string"
+        },
+        "virtualMachineComputerName_windows": {
+            "type": "string"
+        },
+        "virtualMachineComputerName_bbdd": {
+            "type": "string"
+        },
+        "virtualMachineRG": {
+            "type": "string"
+        },
+        "osDiskType": {
+            "type": "string"
+        },
+        "virtualMachineSize_servernagios": {
+            "type": "string"
+        },
+        "virtualMachineSize_linux": {
+            "type": "string"
+        },
+        "virtualMachineSize_windows": {
+            "type": "string"
+        },
+        "virtualMachineSize_bbdd": {
+            "type": "string"
+        },
+        "patchMode": {
+            "type": "string"
+        },
+        "enableHotpatching": {
+            "type": "bool"
+        },
+        "autoShutdownStatus": {
+            "type": "string"
+        },
+        "autoShutdownTime": {
+            "type": "string"
+        },
+        "autoShutdownTimeZone": {
+            "type": "string"
+        },
+        "autoShutdownNotificationStatus": {
+            "type": "string"
+        },
+        "autoShutdownNotificationLocale": {
+            "type": "string"
+        },
+        "autoshutdown":{
+            "type": "string"
+        }
+    },
+    "variables": {
+        "nsgId": "[parameters('networkSecurityGroupId')]",
+        "vnetId": "[parameters('virtualNetworkId')]",
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
+        "ipName_servernagios": "[concat(parameters('ipName_servernagios'), '-', parameters('iniciales'))]",
+        "ipName_linux": "[concat(parameters('ipName_linux'), '-', parameters('iniciales'))]",
+        "ipName_windows": "[concat(parameters('ipName_windows'), '-', parameters('iniciales'))]",
+        "ipName_bbdd": "[concat(parameters('ipName_bbdd'), '-', parameters('iniciales'))]",
+        "networkInterfaceName_servernagios": "[concat(parameters('networkInterfaceName_servernagios'), '-', parameters('iniciales'))]",
+        "networkInterfaceName_linux": "[concat(parameters('networkInterfaceName_linux'), '-', parameters('iniciales'))]",
+        "networkInterfaceName_windows": "[concat(parameters('networkInterfaceName_windows'), '-', parameters('iniciales'))]",
+        "networkInterfaceName_bbdd": "[concat(parameters('networkInterfaceName_bbdd'), '-', parameters('iniciales'))]",
+        "virtualMachineName_servernagios": "[concat(parameters('virtualMachineName_servernagios'), '-', parameters('iniciales'))]",
+        "virtualMachineName_linux": "[concat(parameters('virtualMachineName_linux'), '-', parameters('iniciales'))]",
+        "virtualMachineName_windows": "[concat(parameters('virtualMachineName_windows'), '-', parameters('iniciales'))]",
+        "virtualMachineName_bbdd": "[concat(parameters('virtualMachineName_bbdd'), '-', parameters('iniciales'))]",
+        "virtualMachineComputerName_linux": "[concat(parameters('virtualMachineComputerName_linux'), '-', parameters('iniciales'))]",
+        "virtualMachineComputerName_windows": "[concat(parameters('virtualMachineComputerName_windows'), '-', parameters('iniciales'))]",
+        "autoshutdown_servernagios": "[concat(parameters('autoshutdown'), '-', variables('virtualMachineName_servernagios'))]",
+        "autoshutdown_linux": "[concat(parameters('autoshutdown'), '-', variables('virtualMachineName_linux'))]",
+        "autoshutdown_windows": "[concat(parameters('autoshutdown'), '-', variables('virtualMachineName_windows'))]",
+        "autoshutdown_bbdd": "[concat(parameters('autoshutdown'), '-', variables('virtualMachineName_bbdd'))]"
+    },
+    "resources": [
+        {
+            "name": "[variables('ipName_servernagios')]",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2020-11-01",
+            "location": "westeurope",
+            "sku": {
+                "name": "Basic",
+                "tier": "Regional"
+            },
+            "properties": {
+                "publicIPAddressVersion": "IPv4",
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4,
+                "ipTags": []
+            },
+            "tags": {
+                "Lab": "Nagios",
+                "VM": "[variables('virtualMachineName_servernagios')]"
+            }
+        },
+        {
+            "name": "[variables('ipName_linux')]",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2020-11-01",
+            "location": "westeurope",
+            "sku": {
+                "name": "Basic",
+                "tier": "Regional"
+            },
+            "properties": {
+                "publicIPAddressVersion": "IPv4",
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4,
+                "ipTags": []
+            },
+            "tags": {
+                "Lab": "Nagios",
+                "VM": "[variables('virtualMachineName_linux')]"
+            }
+        },
+        {
+            "name": "[variables('ipName_windows')]",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2020-11-01",
+            "location": "westeurope",
+            "sku": {
+                "name": "Basic",
+                "tier": "Regional"
+            },
+            "properties": {
+                "publicIPAddressVersion": "IPv4",
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4,
+                "ipTags": []
+            },
+            "tags": {
+                "Lab": "Nagios",
+                "VM": "[variables('virtualMachineName_windows')]"
+            }
+        },
+        {
+            "name": "[variables('ipName_bbdd')]",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2020-11-01",
+            "location": "westeurope",
+            "sku": {
+                "name": "Basic",
+                "tier": "Regional"
+            },
+            "properties": {
+                "publicIPAddressVersion": "IPv4",
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4,
+                "ipTags": []
+            },
+            "tags": {
+                "Lab": "Nagios",
+                "VM": "[variables('virtualMachineName_bbdd')]"
+            }
+        },
+        {
+            "name": "[variables('networkInterfaceName_servernagios')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2018-10-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/publicIPAddresses/', variables('ipName_servernagios'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
+                            },
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[concat('/subscriptions/8df38d37-e466-425f-b08b-9b9970aea6c5/resourceGroups/MonitoringPOC/providers/Microsoft.Network/publicIPAddresses/', variables('ipName_servernagios'))]"
+                            }
+                        }
+                    }
+                ],
+                "networkSecurityGroup": {
+                    "id": "[variables('nsgId')]"
+                }
+            },
+            "tags": {
+                "Lab": "Nagios",
+                "VM": "[variables('virtualMachineName_servernagios')]" 
+            }
+        },
+        {
+            "name": "[variables('networkInterfaceName_linux')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2018-10-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/publicIPAddresses/', variables('ipName_linux'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
+                            },
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[concat('/subscriptions/8df38d37-e466-425f-b08b-9b9970aea6c5/resourceGroups/MonitoringPOC/providers/Microsoft.Network/publicIPAddresses/', variables('ipName_linux'))]"
+                            }
+                        }
+                    }
+                ],
+                "networkSecurityGroup": {
+                    "id": "[variables('nsgId')]"
+                }
+            },
+            "tags": {
+                "Lab": "Nagios",
+                "VM": "[variables('virtualMachineName_linux')]"
+            }
+        },
+        {
+            "name": "[variables('networkInterfaceName_windows')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2018-10-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/publicIPAddresses/', variables('ipName_windows'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
+                            },
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[concat('/subscriptions/8df38d37-e466-425f-b08b-9b9970aea6c5/resourceGroups/MonitoringPOC/providers/Microsoft.Network/publicIPAddresses/', variables('ipName_windows'))]"
+                            }
+                        }
+                    }
+                ],
+                "networkSecurityGroup": {
+                    "id": "[variables('nsgId')]"
+                }
+            },
+            "tags": {
+                "Lab": "Nagios",
+                "VM": "[variables('virtualMachineName_windows')]"
+            }
+        },
+        {
+            "name": "[variables('networkInterfaceName_bbdd')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2018-10-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/publicIPAddresses/', variables('ipName_linux'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
+                            },
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[concat('/subscriptions/8df38d37-e466-425f-b08b-9b9970aea6c5/resourceGroups/MonitoringPOC/providers/Microsoft.Network/publicIPAddresses/', variables('ipName_bbdd'))]"
+                            }
+                        }
+                    }
+                ],
+                "networkSecurityGroup": {
+                    "id": "[variables('nsgId')]"
+                }
+            },
+            "tags": {
+                "Lab": "Nagios",
+                "VM": "[variables('virtualMachineName_bbdd')]"
+            }
+        },
+        {
+            "name": "[variables('virtualMachineName_servernagios')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2020-12-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName_servernagios'))]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('virtualMachineSize_servernagios')]"
+                },
+                "storageProfile": {
+                    "osDisk": {
+                        "createOption": "fromImage",
+                        "managedDisk": {
+                            "storageAccountType": "[parameters('osDiskType')]"
+                        }
+                    },
+                    "imageReference": {
+                        "id": "/subscriptions/8df38d37-e466-425f-b08b-9b9970aea6c5/resourceGroups/testlab/providers/Microsoft.Compute/galleries/practicasasturias/images/monitoring-nagios-NAGIOSFINAL-0"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName_servernagios'))]"
+                        }
+                    ]
+                }
+            },
+            "tags": {
+                "Lab": "Nagios",
+                "VM": "[variables('virtualMachineName_servernagios')]"
+            }
+        },
+        {
+            "name": "[variables('virtualMachineName_linux')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2020-12-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName_linux'))]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('virtualMachineSize_linux')]"
+                },
+                "storageProfile": {
+                    "osDisk": {
+                        "createOption": "fromImage",
+                        "managedDisk": {
+                            "storageAccountType": "[parameters('osDiskType')]"
+                        }
+                    },
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "18.04-LTS",
+                        "version": "latest"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName_linux'))]"
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[variables('virtualMachineComputerName_linux')]",
+                    "adminUsername": "toolsadm",
+                    "adminPassword": "Capgemini2021",
+                    "linuxConfiguration": {
+                        "patchSettings": {
+                            "patchMode": "ImageDefault"
+                        }
+                    }
+                }
+            },
+            "tags": {
+                "Lab": "Nagios",
+                "VM": "[variables('virtualMachineName_linux')]"
+            }
+        },
+        {
+            "name": "[variables('virtualMachineName_windows')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2020-12-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName_windows'))]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('virtualMachineSize_windows')]"
+                },
+                "storageProfile": {
+                    "osDisk": {
+                        "createOption": "fromImage",
+                        "managedDisk": {
+                            "storageAccountType": "[parameters('osDiskType')]"
+                        }
+                    },
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2019-Datacenter",
+                        "version": "latest"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName_windows'))]"
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[variables('virtualMachineComputerName_windows')]",
+                    "adminUsername": "toolsadm",
+                    "adminPassword": "Capgemini2021",
+                    "windowsConfiguration": {
+                        "enableAutomaticUpdates": true,
+                        "provisionVmAgent": true,
+                        "patchSettings": {
+                            "enableHotpatching": "[parameters('enableHotpatching')]",
+                            "patchMode": "[parameters('patchMode')]"
+                        }
+                    }   
+                }
+            },
+            "tags": {
+                "Lab": "Nagios",
+                "VM": "[variables('virtualMachineName_windows')]"
+            }
+        },
+        {
+            "name": "[variables('virtualMachineName_bbdd')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2020-12-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName_bbdd'))]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('virtualMachineSize_bbdd')]"
+                },
+                "storageProfile": {
+                    "osDisk": {
+                        "createOption": "fromImage",
+                        "managedDisk": {
+                            "storageAccountType": "[parameters('osDiskType')]"
+                        }
+                    },
+                    "imageReference": {
+                        "id": "/subscriptions/8df38d37-e466-425f-b08b-9b9970aea6c5/resourceGroups/testlab/providers/Microsoft.Compute/galleries/practicasasturias/images/orabox-orabox-v1-0"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName_bbdd'))]"
+                        }
+                    ]
+                }
+            },
+            "tags": {
+                "Lab": "Nagios",
+                "VM": "[variables('virtualMachineName_bbdd')]"
+            }
+        },
+        {
+            "name": "[variables('autoshutdown_servernagios')]",
+            "type": "Microsoft.DevTestLab/schedules",
+            "apiVersion": "2017-04-26-preview",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', variables('virtualMachineName_servernagios'))]"
+            ],
+            "properties": {
+                "status": "[parameters('autoShutdownStatus')]",
+                "taskType": "ComputeVmShutdownTask",
+                "dailyRecurrence": {
+                    "time": "[parameters('autoShutdownTime')]"
+                },
+                "timeZoneId": "[parameters('autoShutdownTimeZone')]",
+                "targetResourceId": "[resourceId('Microsoft.Compute/virtualMachines', variables('virtualMachineName_servernagios'))]",
+                "notificationSettings": {
+                    "status": "[parameters('autoShutdownNotificationStatus')]",
+                    "notificationLocale": "[parameters('autoShutdownNotificationLocale')]",
+                    "timeInMinutes": "30"
+                }
+            }
+        },
+        {
+            "name": "[variables('autoshutdown_linux')]",
+            "type": "Microsoft.DevTestLab/schedules",
+            "apiVersion": "2017-04-26-preview",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', variables('virtualMachineName_linux'))]"
+            ],
+            "properties": {
+                "status": "[parameters('autoShutdownStatus')]",
+                "taskType": "ComputeVmShutdownTask",
+                "dailyRecurrence": {
+                    "time": "[parameters('autoShutdownTime')]"
+                },
+                "timeZoneId": "[parameters('autoShutdownTimeZone')]",
+                "targetResourceId": "[resourceId('Microsoft.Compute/virtualMachines', variables('virtualMachineName_linux'))]",
+                "notificationSettings": {
+                    "status": "[parameters('autoShutdownNotificationStatus')]",
+                    "notificationLocale": "[parameters('autoShutdownNotificationLocale')]",
+                    "timeInMinutes": "30"
+                }
+            }
+        },
+        {
+            "name": "[variables('autoshutdown_windows')]",
+            "type": "Microsoft.DevTestLab/schedules",
+            "apiVersion": "2017-04-26-preview",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', variables('virtualMachineName_windows'))]"
+            ],
+            "properties": {
+                "status": "[parameters('autoShutdownStatus')]",
+                "taskType": "ComputeVmShutdownTask",
+                "dailyRecurrence": {
+                    "time": "[parameters('autoShutdownTime')]"
+                },
+                "timeZoneId": "[parameters('autoShutdownTimeZone')]",
+                "targetResourceId": "[resourceId('Microsoft.Compute/virtualMachines', variables('virtualMachineName_windows'))]",
+                "notificationSettings": {
+                    "status": "[parameters('autoShutdownNotificationStatus')]",
+                    "notificationLocale": "[parameters('autoShutdownNotificationLocale')]",
+                    "timeInMinutes": "30"
+                }
+            }
+        },
+        {
+            "name": "[variables('autoshutdown_bbdd')]",
+            "type": "Microsoft.DevTestLab/schedules",
+            "apiVersion": "2017-04-26-preview",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', variables('virtualMachineName_bbdd'))]"
+            ],
+            "properties": {
+                "status": "[parameters('autoShutdownStatus')]",
+                "taskType": "ComputeVmShutdownTask",
+                "dailyRecurrence": {
+                    "time": "[parameters('autoShutdownTime')]"
+                },
+                "timeZoneId": "[parameters('autoShutdownTimeZone')]",
+                "targetResourceId": "[resourceId('Microsoft.Compute/virtualMachines', variables('virtualMachineName_bbdd'))]",
+                "notificationSettings": {
+                    "status": "[parameters('autoShutdownNotificationStatus')]",
+                    "notificationLocale": "[parameters('autoShutdownNotificationLocale')]",
+                    "timeInMinutes": "30"
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}
