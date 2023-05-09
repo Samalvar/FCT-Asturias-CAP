@@ -14,6 +14,11 @@ Para que los mires/guardes/consultes cuando gustes o necesites. También os deja
 + [Documentación de Terraform / Hashicorp](https://www.terraform.io/)
 + [Repositorio de Terraform en GitHub](https://github.com/hashicorp/terraform)
 
+### Requisitos principales del laboratorio:
++ Tener instalado Visual Studio Code
++ Tener instalado Terraform - [Instalador de Terraform](https://releases.hashicorp.com/terraform/0.15.3/terraform_0.15.3_windows_amd64.zip). Revisar como incorporar el ejecutable al path del sistema. Una vez instalado terraform de forma correcta deberías de poder lanzar terraform desde la terminal (git bash) y debería mostraros todos los comandos existentes en terraform.
++ Tener instalado AZURE CLI - [Instalación de Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli)
+
 ### Objetivo del ejercicio
 En el fichero main.tf del directorio Azure dispones de un script de Terraform que te permitirá desplegar una máquina virtual en Azure.
 En el fichero main.tf del directorio GCP dispones de un script de Terraform que te permitirá desplegar una máquina virtual en Google Cloud.
